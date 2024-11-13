@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import menuBg from "../assets/menuBg.jpg";
 import menuBg2 from "../assets/bgImage2.png";
 import axios from "axios";
+import { backendUrl } from "../utils/apiUrl";
 
 const Menu = () => {
   const [item, setItem] = useState();
@@ -13,7 +14,7 @@ const Menu = () => {
   const getAllProducts = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/items/getAllItems`
+        `${backendUrl}/api/items/getAllItems`
       );
       setItem(response.data);
     } catch (error) {
