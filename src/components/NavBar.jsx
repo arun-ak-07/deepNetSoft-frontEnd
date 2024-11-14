@@ -1,110 +1,146 @@
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import React, { useState } from "react";
 import logo from "../assets/logo.png";
 
-const navigation = [
-  { name: "HOME", href: "#", current: true },
-  { name: "MENU", href: "#", current: false },
-  { name: "MAKE A RESERVATION", href: "#", current: false },
-  { name: "CONTACT US", href: "#", current: false },
-];
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [color,setColor] = useState('#0796EF')
+  const [nav, setNav] = useState('home')
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
-export default function NavBar() {
   return (
-    <Disclosure as="nav" className="bg-[#121618]">
-      <div className="mx-auto max-w-7xl px-2 pt-6 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between py-2">
-          <div className="absolute inset-y-0 left-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 sm:justify-start justify-center w-full sm:w-auto">
-            <div className="relative ml-3">
-              <img
-                alt="Logo"
-                src={logo}
-                className="size-20"
-                style={{
-                  position: "absolute",
-                  top: "44px",
-                  right: "130px",
-                  zIndex: "2",
-                }}
-              />
-              <div className="flex flex-row pt-10">
-                <h4 className="text-[#0796EF] text-3xl font-normal hidden md:block">DEEP</h4>
-                <h4 className="text-3xl hidden md:block font-normal ml-2 text-white">NET</h4>
-              </div>
-              <h4
-                style={{ position: "absolute", top: "80px", right: "50px", zIndex: "33" }}
-                className="text-[35px] text-[#857878] md:block ml-2 font-medium text-[35px] hidden md:block"
-              >
-                SOFT
-              </h4>
-            </div>
-          </div>
+    <div className="bg-[#121618] text-white">
+      <div className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+        <div className="md:hidden">
+          <img alt="Logo" src={logo} className="size-14 block md:hidden" style={{
+              position: "relative",
+              top:'44px',
+              left: "153px",
+              zIndex: "999",
+            }}/>
+        </div>
 
-          {/* Navigation links for desktop view */}
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-end">
-            <div className="hidden sm:ml-6 sm:block">
-              <div className="flex space-x-4">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    aria-current={item.current ? "page" : undefined}
-                    className={classNames(
-                      item.current
-                        ? "text-[#0796EF]"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "rounded-md px-3 py-2 text-sm font-sans text-base font-semibold"
-                    )}
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
+        <div className="relative ml-3">
+          <img
+            alt="Logo"
+            src={logo}
+            className="size-20 hidden md:block"
+            style={{
+              position: "absolute",
+              top: "50px",
+              right: "130px",
+              zIndex: "2",
+            }}
+          />
 
-          {/* Mobile menu button */}
-          <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon
-                aria-hidden="true"
-                className="block size-6 group-data-[open]:hidden"
-              />
-              <XMarkIcon
-                aria-hidden="true"
-                className="hidden size-6 group-data-[open]:block"
-              />
-            </DisclosureButton>
+          <div className="flex flex-row pt-10">
+            <h4 className="text-[#0796EF] text-3xl font-normal hidden md:block">
+              DEEP
+            </h4>
+            <h4 className="text-3xl hidden md:block font-normal ml-2 text-white">
+              NET
+            </h4>
           </div>
+          <h4
+            style={{
+              position: "absolute",
+              top: "80px",
+              right: "50px",
+              zIndex: "33",
+            }}
+            className="text-[35px] text-[#857878] md:block ml-2 font-medium hidden md:block"
+          >
+            SOFT
+          </h4>
+        </div>
+
+        <div className="flex items-center">
+          <button
+            onClick={toggleMenu}
+            className="md:hidden text-gray-300 focus:outline-none"
+            aria-label="Toggle menu"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+
+          <nav className="hidden md:flex space-x-8 ml-auto pt-12">
+            <a
+              className="text-[16px] font-oswald font-medium hover:text-[#0796EF] cursor-pointer"
+              onClick={() => setNav('home')}
+              style={{color:nav === 'home' && `${color}`}}
+            >
+              HOME
+            </a>
+            <a
+              className="text-[16px] font-oswald font-medium hover:text-[#0796EF] cursor-pointer"
+              onClick={() => setNav('menu')}
+              style={{color:nav === 'menu' && `${color}`}}
+            >
+              MENU
+            </a>
+            <a
+              className="text-[16px] font-oswald font-medium hover:text-[#0796EF] cursor-pointer"
+              onClick={() => setNav('reservation')}
+              style={{color:nav === 'reservation' && `${color}`}}
+            >
+              MAKE A RESERVATION
+            </a>
+            <a
+              className="text-[16px] font-oswald font-medium hover:text-[#0796EF] cursor-pointer"
+              onClick={() => setNav('contact')}
+              style={{color:nav === 'contact' && `${color}`}}
+            >
+              CONTACT US
+            </a>
+          </nav>
         </div>
       </div>
 
-      {/* Mobile view menu items */}
-      <DisclosurePanel className="sm:hidden">
-        <div className="space-y-1 px-2 pb-3 pt-2">
-          {navigation.map((item) => (
-            <DisclosureButton
-              key={item.name}
-              as="a"
-              href={item.href}
-              aria-current={item.current ? "page" : undefined}
-              className={classNames(
-                item.current
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                "block rounded-md px-3 py-2 text-base font-semibold"
-              )}
-            >
-              {item.name}
-            </DisclosureButton>
-          ))}
+      {isOpen && (
+        <div className="md:hidden bg-black text-center p-4">
+          <a
+            href="/"
+            className="block py-2 text-[16px] font-oswald font-medium hover:text-[#0796EF]"
+          >
+            HOME
+          </a>
+          <a
+            href="/menu"
+            className="block py-2 text-[16px] font-oswald font-medium hover:text-[#0796EF]"
+          >
+            MENU
+          </a>
+          <a
+            href="/reservation"
+            className="block py-2 text-[16px] font-oswald font-medium hover:text-[#0796EF]"
+          >
+            MAKE A RESERVATION
+          </a>
+          <a
+            href="/contact"
+            className="block py-2 text-[16px] font-oswald font-medium hover:text-[#0796EF]"
+          >
+            CONTACT US
+          </a>
         </div>
-      </DisclosurePanel>
-    </Disclosure>
+      )}
+    </div>
   );
-}
+};
+
+export default Navbar;
