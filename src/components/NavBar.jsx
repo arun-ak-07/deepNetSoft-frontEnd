@@ -17,7 +17,7 @@ const Navbar = () => {
           <img alt="Logo" src={logo} className="size-14 block md:hidden" style={{
               position: "relative",
               top:'44px',
-              left: "153px",
+              left: "141px",
               zIndex: "999",
             }}/>
         </div>
