@@ -10,6 +10,7 @@ const Menu = () => {
   const [item, setItem] = useState();
   const [category, setCategory] = useState("food");
   const [color, setColor] = useState("#0796EF");
+  const [loading,setLoading] = useState(true);
 
   console.log("category: " + category);
 
@@ -20,12 +21,15 @@ const Menu = () => {
   console.log("Item", item);
 
   const getAllProducts = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(`${backendUrl}/api/items/getAllItems`);
       const filteredItem = response.data.filter((item) => item.category === category);
       setItem(filteredItem);
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -118,21 +122,27 @@ const Menu = () => {
           </div>
 
           <div className="w-full flex flex-col sm:grid sm:grid-cols-2 gap-4">
-            {item?.map((prod, index) => (
-              <div key={index} className="m-2 w-full p-4">
-                <div className="flex justify-between items-center">
-                  <h2 className="text-white font-normal text-lg sm:text-xl md:text-2xl ml-2">
-                    {prod.itemName}
-                  </h2>
-                  <h2 className="text-white font-normal text-lg sm:text-xl md:text-2xl mr-6">
-                    ${prod.price}
-                  </h2>
-                </div>
-                <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-500 font-kelly text-left mt-2 m-2">
-                  {prod.description}
-                </p>
+            {loading ? (
+              <div className="text-center text-white font-semibold">
+                Loading...
               </div>
-            ))}
+            ) : (
+              item?.map((prod, index) => (
+                <div key={index} className="m-2 w-full p-4">
+                  <div className="flex justify-between items-center">
+                    <h2 className="text-white font-normal text-lg sm:text-xl md:text-2xl ml-2">
+                      {prod.itemName}
+                    </h2>
+                    <h2 className="text-white font-normal text-lg sm:text-xl md:text-2xl mr-6">
+                      ${prod.price}
+                    </h2>
+                  </div>
+                  <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-500 font-kelly text-left mt-2 m-2">
+                    {prod.description}
+                  </p>
+                </div>
+              ))
+            )}
           </div>
         </div>
 
